@@ -1,0 +1,113 @@
+#include <iostream>
+#include <string>
+
+class Node {
+public:
+    std::string name; // Data of the node
+    Node* next;       // Pointer to the next node
+
+    Node(const std::string& val) : name(val), next(NULL) {} // Constructor
+};
+
+class SinglyLinkedList {
+private:
+    Node* head; // Pointer to the head of the list
+
+public:
+    SinglyLinkedList() : head(NULL) {} // Constructor
+
+    // Function to insert a new name at the beginning
+    void insertAtBeginning(const std::string& name) {
+        Node* newNode = new Node(name);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Function to insert a new name at the end
+    void insertAtEnd(const std::string& name) {
+        Node* newNode = new Node(name);
+        if (!head) {
+            head = newNode; // If list is empty, new node becomes the head
+            return;
+        }
+        Node* temp = head;
+        while (temp->next) {
+            temp = temp->next; // Traverse to the last node
+        }
+        temp->next = newNode; // Link the last node to the new node
+    }
+
+    // Function to delete a name by value
+    void deleteNode(const std::string& name) {
+        if (!head) return; // If list is empty
+
+        // If the name to be deleted is the head
+        if (head->name == name) {
+            Node* temp = head;
+            head = head->next; // Move head to the next node
+            delete temp;       // Free the old head
+            return;
+        }
+
+        // Traverse the list to find the name to delete
+        Node* current = head;
+        while (current->next && current->next->name != name) {
+            current = current->next;
+        }
+
+        // If the name was found
+        if (current->next) {
+            Node* temp = current->next; // Node to delete
+            current->next = current->next->next; // Bypass the node
+            delete temp; // Free the node
+        }
+    }
+
+    // Function to display the linked list
+    void display() {
+        Node* temp = head;
+        while (temp) {
+            std::cout << temp->name << " -> ";
+            temp = temp->next; // Move to the next node
+        }
+        std::cout << "NULL" << std::endl; // End of the list
+    }
+
+    // Destructor to free the allocated memory
+    ~SinglyLinkedList() {
+        Node* current = head;
+        Node* nextNode;
+        while (current) {
+            nextNode = current->next; // Store the next node
+            delete current;           // Delete the current node
+            current = nextNode;       // Move to the next node
+        }
+    }
+};
+
+int main() {
+    SinglyLinkedList list;
+
+    // Inserting names at the beginning
+    list.insertAtBeginning("Jichonyanya");
+    list.insertAtBeginning("Bondi");
+
+    // Inserting names at the end
+    list.insertAtEnd("kamau");
+    list.insertAtEnd("Dinaso");
+
+    std::cout << "Current List: ";
+    list.display();
+
+    // Deleting a name
+    list.deleteNode("Bondi");
+    std::cout << "After deleting Bondi: ";
+    list.display();
+
+    list.deleteNode("Jichonyanya");
+    std::cout << "After deleting Jicho nyanya: ";
+    list.display();
+
+    return 0;
+}
+
