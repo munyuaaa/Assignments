@@ -1,0 +1,9 @@
+     *
+    /  \
+  +      -
+ / \    / \
+A   B  C   D
+
+INORDER:A,+,B,*,C,-,D.
+PRE-ORDER:*,+,A,B,-,C,D.
+POST-ORDER:A,B,+,C,D,-,*.
