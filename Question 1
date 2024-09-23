@@ -1,0 +1,33 @@
+#include <iostream>
+void displayArray(int arr[], int size) {
+    std::cout << "Current Array: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    const int capacity = 100; // Maximum size of the array
+    int arr[capacity];
+    int size = 0; // Current size of the array
+
+    std::cout << "Enter the number of elements to insert (max " << capacity << "): ";
+    std::cin >> size;
+
+    if (size < 1 || size > capacity) {
+        std::cout << "Invalid size! Please enter a number between 1 and " << capacity << "." << std::endl;
+        return 1;
+    }
+
+    // Input elements into the array
+    for (int i = 0; i < size; i++) {
+        std::cout << "Enter element " << (i + 1) << ": ";
+        std::cin >> arr[i];
+    }
+
+    // Display the array
+    displayArray(arr, size);
+
+    return 0;
+}
