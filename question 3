@@ -1,0 +1,95 @@
+#include <iostream>
+#include <stdexcept>
+#include <string>
+
+class NameStack {
+private:
+    std::string* arr; // Array to hold the names
+    int top;          // Index of the top element
+    int capacity;     // Maximum number of elements in the stack
+
+public:
+    // Constructor to initialize the stack
+    NameStack(int size) {
+        arr = new std::string[size];
+        capacity = size;
+        top = -1; // Stack is initially empty
+    }
+
+    // Destructor to free allocated memory
+    ~NameStack() {
+        delete[] arr;
+    }
+
+    // Function to push a name onto the stack
+    void push(const std::string& name) {
+        if (top == capacity - 1) {
+            std::cout << "Stack Overflow: Unable to push " << name << std::endl;
+            return;
+        }
+        arr[++top] = name; // Increment top and add the name
+        std::cout << "Pushed " << name << " onto the stack." << std::endl;
+    }
+
+    // Function to pop a name from the stack
+    std::string pop() {
+        if (isEmpty()) {
+            std::cout << "Stack Underflow: Unable to pop from an empty stack" << std::endl;
+            return ""; // Indicate failure
+        }
+        return arr[top--]; // Return the top name and decrement top
+    }
+
+    // Function to delete the stack
+    void deleteStack() {
+        top = -1; // Reset the stack to empty
+        std::cout << "Stack deleted." << std::endl;
+    }
+
+    // Function to check if the stack is empty
+    bool isEmpty() const {
+        return top == -1;
+    }
+
+    // Function to display the stack
+    void display() const {
+        if (isEmpty()) {
+            std::cout << "Stack is empty." << std::endl;
+            return;
+        }
+        std::cout << "Stack elements: ";
+        for (int i = top; i >= 0; --i) {
+            std::cout << arr[i] << " ";
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    NameStack stack(5); // Create a stack of capacity 5
+
+    // Pushing names onto the stack
+    stack.push("DMX");
+    stack.push("NAS");
+    stack.push("N.O.T.O.R.I.O.U.S.B.I.G");
+
+    // Display the current stack
+    stack.display();
+
+    // Popping a name from the stack
+    std::cout << "Popped name: " << stack.pop() << std::endl;
+
+    // Display the stack after popping
+    stack.display();
+
+    // Pushing another name onto the stack
+    stack.push("THUGNIFICENT");
+
+    // Display the stack
+    stack.display();
+
+    // Delete the stack
+    stack.deleteStack();
+
+    return 0;
+}
